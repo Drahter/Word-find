@@ -15,6 +15,7 @@ djangorestframework = "^3.15.2"
 drf-yasg = "^1.21.8"
 python-dotenv = "^1.0.1"
 redis = "^5.2.1"
+rest-framework-simplejwt = "^0.0.2"
 
 
 [build-system]
