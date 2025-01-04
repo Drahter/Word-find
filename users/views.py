@@ -71,16 +71,3 @@ def reset_password(request):
         return redirect(reverse("users:login"))
 
     return render(request, 'users/reset_password.html')
-
-
-@login_required
-def user_activity(request, pk):
-    """Функция для смены активности пользователей(не получателей)"""
-    user = get_object_or_404(User, pk=pk)
-    if user.is_active:
-        user.is_active = False
-    elif not user.is_active:
-        user.is_active = True
-    user.save()
-
-    return redirect(reverse('users:user_list'))

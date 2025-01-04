@@ -10,10 +10,14 @@
                 <h4>Навигация</h4>
                 {% if user.is_authenticated %}
                 <p>Привет, {{ user.email }}!</p>
+                <form action="{% url 'users:logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Выйти</button>
+                </form>
                 {% endif %}
                 <ul class="list-unstyled">
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'users:logout' %}" class="text-white">Выйти</a></li>
+
                     {% else %}
                     <li><a href="{% url 'users:login' %}" class="text-white">Войти</a></li>
                     <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
