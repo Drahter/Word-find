@@ -1,0 +1,25 @@
+{% extends 'finder/base.html' %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">Документ от {{ document.created_date }} № {{ document.pk }}</p>
+                        <p>{{ document.text }}</p>
+                        <div class="btn-group">
+                            <a class="btn btn-primary" href="{% url 'distribution:delivery_detail' delivery.pk %}"
+                               role="button">Посмотреть</a>
+                            <a class="btn btn-primary" href="{% url 'distribution:delivery_update' delivery.pk %}"
+                               role="button">Редактировать</a>
+                            <a class="btn btn-danger" href="{% url 'distribution:delivery_delete' delivery.pk %}"
+                               role="button">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

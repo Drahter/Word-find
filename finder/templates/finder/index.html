@@ -1,0 +1,29 @@
+{% extends 'finder/base.html' %}
+{% block content %}
+<div class="container text-center">
+    <div class="row">
+        <div class="col-3">
+            <p class="str mb-4 mt-5"><strong>
+                Количество документов в нашей базе - {{ total_documents }}, а число пользователей - {{ total_users }}
+            </strong></p>
+        </div>
+        <a class="btn btn-primary" href="{% url 'finder:document_create' %}"
+                               role="button">Добавить документ</a>
+        <div class="col">
+            <div class="row">
+                {% for document in random_docs %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ document.rubrics }}</h5>
+                            <p class="card-text">{{ document.text | truncatechars:100 }}</p>
+                            <small class="text-muted">Дата добавления: {{ document.created_date }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
