@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
+from finder.search import DocumentIndex
+
 
 class Document(models.Model):
     rubrics = ArrayField(
@@ -19,6 +21,16 @@ class Document(models.Model):
 
     def __str__(self):
         return f'Документ №{self.pk}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        document_doc = DocumentIndex(
+            meta={'id': self.pk},
+            rubrics=self.rubrics,
+            text=self.text
+        )
+        document_doc.save()
+        print('Document saved successfully')
 
     class Meta:
         verbose_name = 'Документ'

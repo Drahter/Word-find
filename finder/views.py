@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
 
@@ -12,7 +11,7 @@ class DocumentListView(ListView):
 
     # def get_queryset(self):
     #     """Реализовано кэширование отдельных документов"""
-    #     return get_articles_from_cache()
+    #     return get_documents_from_cache()
 
 
 class DocumentDetailView(DetailView):
