@@ -46,3 +46,7 @@ class IndexView(TemplateView):
         context['total_users'] = User.objects.count()
         context['random_docs'] = Document.objects.order_by('?')[:3]
         return context
+
+
+class SearchResultsView(ListView):
+    pass
