@@ -13,9 +13,9 @@
                         <p>{{ document.rubrics }}</p>
                         <p>{{ document.text }}</p>
                         <div class="btn-group">
-                            <a class="btn btn-primary" href="{% url 'distribution:delivery_detail' delivery.pk %}"
+                            <a class="btn btn-primary" href="{% url 'finder:document_detail' document.pk %}"
                                role="button">Посмотреть</a>
-                            <a class="btn btn-primary" href="{% url 'distribution:delivery_update' delivery.pk %}"
+                            <a class="btn btn-primary" href="{% url 'finder:document_update' document.pk %}"
                                role="button">Редактировать</a>
                         </div>
                     </div>

@@ -9,11 +9,11 @@
                         <p class="card-text">Документ от {{ document.created_date }} № {{ document.pk }}</p>
                         <p>{{ document.text }}</p>
                         <div class="btn-group">
-                            <a class="btn btn-primary" href="{% url 'distribution:delivery_detail' delivery.pk %}"
+                            <a class="btn btn-primary" href="{% url 'finder:document_detail' document.pk %}"
                                role="button">Посмотреть</a>
-                            <a class="btn btn-primary" href="{% url 'distribution:delivery_update' delivery.pk %}"
+                            <a class="btn btn-primary" href="{% url 'finder:document_update' document.pk %}"
                                role="button">Редактировать</a>
-                            <a class="btn btn-danger" href="{% url 'distribution:delivery_delete' delivery.pk %}"
+                            <a class="btn btn-danger" href="{% url 'finder:document_delete' document.pk %}"
                                role="button">Удалить</a>
                         </div>
                     </div>

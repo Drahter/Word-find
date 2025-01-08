@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Form, CharField, TextInput
 from django.core.exceptions import ValidationError
 
 from finder.models import Document
@@ -18,6 +18,11 @@ class DocumentForm(ModelForm, StyleFormMixin):
                            'радар']
         for each in forbidden_words:
             if each in cleaned_data:
-                raise ValidationError('Извините, такое содержание недопустимо для статьи')
+                raise ValidationError('Извините, такое содержание недопустимо для документа')
 
         return cleaned_data
+
+
+class SearchForm(Form):
+    query = CharField(label='Введите текст запроса: ', max_length=50, widget=TextInput(attrs={'placeholder': 'Поиск по тексту'}))
+

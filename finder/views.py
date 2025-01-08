@@ -1,7 +1,8 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView, FormView
+from django.shortcuts import render, redirect
 
-from finder.forms import DocumentForm
+from finder.forms import DocumentForm, SearchForm
 from finder.models import Document
 from users.models import User
 
@@ -48,5 +49,24 @@ class IndexView(TemplateView):
         return context
 
 
+class SearchView(FormView):
+    template_name = 'finder/search_request.html'
+    form_class = SearchForm
+
+    def form_valid(self, form):
+        user_input = form.cleaned_data['query']
+        print(user_input)
+#         return render(self.request, 'results.html', {'user_input': user_input})
+
+
 class SearchResultsView(ListView):
     pass
+
+
+class OutputView(TemplateView):
+    template_name = ''
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_input'] = self.kwargs.get('user_input')
+        return context

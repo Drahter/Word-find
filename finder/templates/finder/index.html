@@ -8,7 +8,9 @@
             </strong></p>
         </div>
         <a class="btn btn-primary" href="{% url 'finder:document_create' %}"
-                               role="button">Добавить документ</a>
+           role="button">Добавить документ</a>
+        <a class="btn btn-primary md-4 mb-4" href="{% url 'finder:search_request' %}"
+           role="button">Начать поиск</a>
         <div class="col">
             <div class="row">
                 {% for document in random_docs %}

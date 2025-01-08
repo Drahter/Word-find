@@ -8,7 +8,7 @@ from finder.views import (
     DocumentDetailView,
     DocumentUpdateView,
     DocumentDeleteView,
-    IndexView,
+    IndexView, SearchView,
 )
 
 app_name = FinderConfig.name
@@ -25,4 +25,5 @@ urlpatterns = [
          name='document_update'),
     path('documents/<int:pk>/delete/', DocumentDeleteView.as_view(),
          name='document_delete'),
+    path('search/', SearchView.as_view(), name='search_request'),
 ]
