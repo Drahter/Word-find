@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 
 from finder.forms import DocumentForm, SearchForm
 from finder.models import Document
+from finder.services import get_results
 from users.models import User
 
 
@@ -55,18 +56,14 @@ class SearchView(FormView):
 
     def form_valid(self, form):
         user_input = form.cleaned_data['query']
-        print(user_input)
-#         return render(self.request, 'results.html', {'user_input': user_input})
+        search_result = get_results(user_input)
+        return render(self.request, 'finder/search_results.html', {'search_result': search_result})
 
 
-class SearchResultsView(ListView):
-    pass
-
-
-class OutputView(TemplateView):
-    template_name = ''
+class SearchResultsView(TemplateView):
+    template_name = 'finder/search_results.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_input'] = self.kwargs.get('user_input')
+        context['search_result'] = self.kwargs.get('search_result')
         return context

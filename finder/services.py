@@ -6,14 +6,8 @@ def get_results(request):
     search = Search(index='documents')
 
     # Добавляем сложные условия поиска
-    search = search.query(
-        {"match": {"content": request}},  # Должен содержать "example"
-    )
+    search = search.query('multi_match', query=request, fields=['rubrics', 'text'])
 
     response = search.execute()
-
-    # Обработка результатов
-    for hit in response:
-        print(f'Title: {hit.title}, Tags: {hit.tags}, Content: {hit.content}')
 
     return response

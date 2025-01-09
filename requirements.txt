@@ -10,4 +10,4 @@ rest-framework-simplejwt~=0.0.2
 docker~=7.1.0
 gunicorn==23.0.0
 elasticsearch==8.17.0
-elasticsearch-dsl==8.17.0
+elasticsearch-dsl==8.17.1
