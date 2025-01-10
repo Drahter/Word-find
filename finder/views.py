@@ -1,3 +1,4 @@
+import elasticsearch
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView, FormView
 from django.shortcuts import render, redirect
@@ -6,6 +7,7 @@ from finder.forms import DocumentForm, SearchForm
 from finder.models import Document
 from finder.services import get_results
 from users.models import User
+from finder.search import DocumentIndex
 
 
 class DocumentListView(ListView):
@@ -34,7 +36,15 @@ class DocumentUpdateView(UpdateView):
 
 class DocumentDeleteView(DeleteView):
     model = Document
-    success_url = reverse_lazy("finder:document_list")
+    success_url = reverse_lazy("finder:index")
+
+    def delete(self, request, *args, **kwargs):
+        # Переопределяем поведение при удалении
+        self.object = self.get_object()
+        id_for_delete = self.object.pk
+        self.object.delete()
+        DocumentIndex.get(id_for_delete).delete()
+        return redirect('finder:index')
 
 
 class IndexView(TemplateView):

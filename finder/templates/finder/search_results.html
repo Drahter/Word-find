@@ -1,7 +1,30 @@
 {% extends 'finder/base.html' %}
 {% block content %}
-
-<div class="row justify-content-center">
-<h3>{{ search_result }}</h3>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for document in search_result %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ document.title }}</h5>
+                        <p class="card-text"><strong>Рубрики:</strong> {{ document.rubrics|join:", " }}</p>
+                        <p class="card-text">{{ document.text }}</p>
+                        <div class="btn-group">
+                            <a class="btn btn-primary" href="{% url 'finder:document_detail' document.pk %}"
+                               role="button">Посмотреть</a>
+                            <a class="btn btn-secondary" href="{% url 'finder:document_update' document.pk %}"
+                               role="button">Редактировать</a>
+                            <a class="btn btn-danger" href="{% url 'finder:document_delete' document.pk %}"
+                               role="button">Удалить</a>
+                        </div>
+                        <p class="card-text"><small>Created on:
+                            {{ document.created_date|date:"D, d M Y H:i" }}</small></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 {% endblock %}
