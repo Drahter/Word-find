@@ -5,14 +5,14 @@
         <div class="col-6">
             <form class="row" method="post" enctype="multipart/form-data">
                 <div class="card">
-                    <p class="card-text">Действительно хотите удалить рассылку от {{ document.created_date }} № {{ document.pk }}?</p>
+                    <p class="card-text">Действительно хотите удалить документ от {{ article.created_date }} № {{ article.pk }}?</p>
                     <div class="card-body">
                         {% csrf_token %}
                     </div>
                     <button type="submit" class="btn btn-primary">
                         Удалить
                     </button>
-                    <a class="btn btn-primary" href="{% url 'distribution:delivery_list' %}" role="button">Отменить</a>
+                    <a class="btn btn-primary" href="{% url 'finder:search_request' %}" role="button">Отменить</a>
                 </div>
             </form>
         </div>

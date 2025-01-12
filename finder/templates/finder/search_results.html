@@ -3,23 +3,21 @@
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for document in search_result %}
+            {% for article in search_result %}
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">{{ document.title }}</h5>
-                        <p class="card-text"><strong>Рубрики:</strong> {{ document.rubrics|join:", " }}</p>
-                        <p class="card-text">{{ document.text }}</p>
+                        <h5 class="card-title">{{ article.title }}</h5>
+                        <p class="card-text"><strong>Рубрики:</strong> {{ article.rubrics|join:", " }}</p>
+                        <p class="card-text">{{ article.text|truncatechars:100 }}</p>
                         <div class="btn-group">
-                            <a class="btn btn-primary" href="{% url 'finder:document_detail' document.pk %}"
+                            <a class="btn btn-primary" href="{% url 'finder:article_detail' article.pk %}"
                                role="button">Посмотреть</a>
-                            <a class="btn btn-secondary" href="{% url 'finder:document_update' document.pk %}"
-                               role="button">Редактировать</a>
-                            <a class="btn btn-danger" href="{% url 'finder:document_delete' document.pk %}"
+                            <a class="btn btn-danger" href="{% url 'finder:article_delete' article.pk %}"
                                role="button">Удалить</a>
                         </div>
                         <p class="card-text"><small>Created on:
-                            {{ document.created_date|date:"D, d M Y H:i" }}</small></p>
+                            {{ article.created_date|date:"D, d M Y H:i" }}</small></p>
                     </div>
                 </div>
             </div>

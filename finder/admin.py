@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from finder.models import Article
+
+
+@admin.register(Article)
+class AdminRegisterUser(admin.ModelAdmin):
+    list_filter = ('id', 'rubrics', 'created_date')

@@ -1,11 +1,11 @@
 from elasticsearch_dsl import Search
 
-from finder.models import Document
+from finder.models import Article
 
 
 def get_results(request):
     # Создаем объект поиска
-    search = Search(index='documents')
+    search = Search(index='articles')
 
     # Добавляем сложные условия поиска
     search = search.query('multi_match', query=request, fields=['rubrics', 'text'])
@@ -13,6 +13,7 @@ def get_results(request):
     response = search.execute()
     results = []
     for hit in response:
-        results.append(Document.objects.get(id=hit.meta.id))
+        results.append(Article.objects.get(id=hit.meta.id))
+    results = results[::-1]
 
     return results

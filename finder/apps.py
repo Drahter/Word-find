@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 from elasticsearch_dsl import connections
 
-from finder.search import DocumentIndex
+from finder.search import ArticleIndex
 
 
 class FinderConfig(AppConfig):
@@ -12,6 +12,6 @@ class FinderConfig(AppConfig):
         # Создаем соединение с Elasticsearch
         connections.create_connection(hosts=['http://elasticsearch:9200'])
 
-        if not DocumentIndex._index.exists():
-            DocumentIndex.init()  # Инициализация индекса в Elasticsearch
+        if not ArticleIndex._index.exists():
+            ArticleIndex.init()  # Инициализация индекса в Elasticsearch
             print("Index created")

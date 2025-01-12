@@ -2,20 +2,20 @@
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
-        <a class="btn btn-primary" href="{% url 'finder:document_create' %}" role="button">Добавить документ</a>
+        <a class="btn btn-primary" href="{% url 'finder:article_create' %}" role="button">Добавить документ</a>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for document in object_list %}
             {% if user == document.owner %}
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="form-control">{{ document }}</h5>
-                        <p>{{ document.rubrics }}</p>
-                        <p>{{ document.text }}</p>
+                        <h5 class="form-control">{{ article }}</h5>
+                        <p>{{ article.rubrics }}</p>
+                        <p>{{ article.text }}</p>
                         <div class="btn-group">
-                            <a class="btn btn-primary" href="{% url 'finder:document_detail' document.pk %}"
+                            <a class="btn btn-primary" href="{% url 'finder:article_detail' article.pk %}"
                                role="button">Посмотреть</a>
-                            <a class="btn btn-primary" href="{% url 'finder:document_update' document.pk %}"
+                            <a class="btn btn-primary" href="{% url 'finder:article_update' article.pk %}"
                                role="button">Редактировать</a>
                         </div>
                     </div>

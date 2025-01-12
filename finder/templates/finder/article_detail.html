@@ -6,14 +6,14 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <p class="card-text">Документ от {{ document.created_date }} № {{ document.pk }}</p>
-                        <p>{{ document.text }}</p>
+                        <p class="card-text">Документ от {{ article.created_date }} № {{ article.pk }}</p>
+                        <p>{{ article.text }}</p>
                         <div class="btn-group">
-                            <a class="btn btn-primary" href="{% url 'finder:document_detail' document.pk %}"
+                            <a class="btn btn-primary" href="{% url 'finder:article_detail' article.pk %}"
                                role="button">Посмотреть</a>
-                            <a class="btn btn-primary" href="{% url 'finder:document_update' document.pk %}"
+                            <a class="btn btn-primary" href="{% url 'finder:article_update' article.pk %}"
                                role="button">Редактировать</a>
-                            <a class="btn btn-danger" href="{% url 'finder:document_delete' document.pk %}"
+                            <a class="btn btn-danger" href="{% url 'finder:article_delete' article.pk %}"
                                role="button">Удалить</a>
                         </div>
                     </div>

@@ -13,17 +13,17 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Document',
+            name='Article',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('rubrics', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=50), blank=True, null=True, size=None, verbose_name='Рубрики документа')),
-                ('text', models.TextField(verbose_name='Текст документа')),
-                ('created_date', models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления документа')),
+                ('rubrics', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=50), blank=True, null=True, size=None, verbose_name='Рубрики статьи')),
+                ('text', models.TextField(verbose_name='Текст статьи')),
+                ('created_date', models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления статьи')),
             ],
             options={
-                'verbose_name': 'Документ',
-                'verbose_name_plural': 'Документы',
-                'ordering': ['-created_date'],
+                'verbose_name': 'Статья',
+                'verbose_name_plural': 'Статьи',
+                'ordering': ['created_date'],
             },
         ),
     ]

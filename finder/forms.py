@@ -1,13 +1,13 @@
 from django.forms import ModelForm, Form, CharField, TextInput
 from django.core.exceptions import ValidationError
 
-from finder.models import Document
+from finder.models import Article
 from users.forms import StyleFormMixin
 
 
-class DocumentForm(ModelForm, StyleFormMixin):
+class ArticleForm(ModelForm, StyleFormMixin):
     class Meta:
-        model = Document
+        model = Article
         fields = '__all__'
 
     def clean_text(self):
@@ -24,5 +24,6 @@ class DocumentForm(ModelForm, StyleFormMixin):
 
 
 class SearchForm(Form):
-    query = CharField(label='Введите текст запроса: ', max_length=50, widget=TextInput(attrs={'placeholder': 'Поиск по тексту'}))
+    query = CharField(label='Введите текст запроса: ', max_length=50,
+                      widget=TextInput(attrs={'placeholder': 'Поиск по тексту'}))
 

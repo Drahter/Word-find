@@ -1,41 +1,40 @@
-import elasticsearch
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView, FormView
 from django.shortcuts import render, redirect
 
-from finder.forms import DocumentForm, SearchForm
-from finder.models import Document
+from finder.forms import ArticleForm, SearchForm
+from finder.models import Article
 from finder.services import get_results
 from users.models import User
-from finder.search import DocumentIndex
+from finder.search import ArticleIndex
 
 
-class DocumentListView(ListView):
-    model = Document
+class ArticleListView(ListView):
+    model = Article
 
     # def get_queryset(self):
     #     """Реализовано кэширование отдельных документов"""
     #     return get_documents_from_cache()
 
 
-class DocumentDetailView(DetailView):
-    model = Document
+class ArticleDetailView(DetailView):
+    model = Article
 
 
-class DocumentCreateView(CreateView):
-    model = Document
-    form_class = DocumentForm
-    success_url = reverse_lazy("finder:document_list")
+class ArticleCreateView(CreateView):
+    model = Article
+    form_class = ArticleForm
+    success_url = reverse_lazy("finder:article_list")
 
 
-class DocumentUpdateView(UpdateView):
-    model = Document
-    form_class = DocumentForm
-    success_url = reverse_lazy("finder:document_list")
+class ArticleUpdateView(UpdateView):
+    model = Article
+    form_class = ArticleForm
+    success_url = reverse_lazy("finder:article_list")
 
 
-class DocumentDeleteView(DeleteView):
-    model = Document
+class ArticleDeleteView(DeleteView):
+    model = Article
     success_url = reverse_lazy("finder:index")
 
     def delete(self, request, *args, **kwargs):
@@ -43,7 +42,7 @@ class DocumentDeleteView(DeleteView):
         self.object = self.get_object()
         id_for_delete = self.object.pk
         self.object.delete()
-        DocumentIndex.get(id_for_delete).delete()
+        ArticleIndex.get(id=id_for_delete).delete()
         return redirect('finder:index')
 
 
@@ -51,12 +50,12 @@ class IndexView(TemplateView):
     template_name = 'finder/index.html'
 
     def get_context_data(self, **kwargs):
-        """Получение данных из ДБ о количестве документов, пользователей и случайных документов"""
+        """Получение данных из ДБ о количестве статей, пользователей и случайных статей"""
         context = super().get_context_data(**kwargs)
 
-        context['total_documents'] = Document.objects.count()
+        context['total_articles'] = Article.objects.count()
         context['total_users'] = User.objects.count()
-        context['random_docs'] = Document.objects.order_by('?')[:3]
+        context['random_articles'] = Article.objects.order_by('?')[:3]
         return context
 
 
