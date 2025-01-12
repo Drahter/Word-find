@@ -14,6 +14,6 @@ def get_results(request):
     results = []
     for hit in response:
         results.append(Article.objects.get(id=hit.meta.id))
-    results = results[::-1]
+    results = results[-20:][::-1]
 
     return results
