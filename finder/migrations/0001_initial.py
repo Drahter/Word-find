@@ -3,6 +3,8 @@
 import django.contrib.postgres.fields
 from django.db import migrations, models
 
+from config import settings
+
 
 class Migration(migrations.Migration):
 
@@ -19,6 +21,7 @@ class Migration(migrations.Migration):
                 ('rubrics', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=50), blank=True, null=True, size=None, verbose_name='Рубрики статьи')),
                 ('text', models.TextField(verbose_name='Текст статьи')),
                 ('created_date', models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления статьи')),
+                ('owner', models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='автор рассылки', blank=True, null=True, on_delete=models.SET_NULL))
             ],
             options={
                 'verbose_name': 'Статья',

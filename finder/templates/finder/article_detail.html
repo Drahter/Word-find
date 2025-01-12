@@ -6,8 +6,11 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <p class="card-text">Документ от {{ article.created_date }} № {{ article.pk }}</p>
+                        <p class="card-text">Документ № {{ article.pk }}</p>
+                        <p><strong>Рубрики:</strong> {{ article.rubrics|join:", " }}</p>
                         <p>{{ article.text }}</p>
+                        <p class="card-text"><small>Дата добавления:
+                            {{ article.created_date|date:"D, d M Y H:i" }}</small></p>
                         <div class="btn-group">
                             <a class="btn btn-primary" href="{% url 'finder:article_detail' article.pk %}"
                                role="button">Посмотреть</a>

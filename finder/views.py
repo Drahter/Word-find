@@ -26,6 +26,15 @@ class ArticleCreateView(CreateView):
     form_class = ArticleForm
     success_url = reverse_lazy("finder:article_list")
 
+    def form_valid(self, form):
+        """Установка создающего пользователя как владельца"""
+        article = form.save()
+        user = self.request.user
+        article.owner = user
+        article.save()
+
+        return super().form_valid(form)
+
 
 class ArticleUpdateView(UpdateView):
     model = Article
@@ -43,6 +52,7 @@ class ArticleDeleteView(DeleteView):
         id_for_delete = self.object.pk
         self.object.delete()
         ArticleIndex.get(id=id_for_delete).delete()
+        print("Document deleted")
         return redirect('finder:index')
 
 

@@ -9,6 +9,7 @@ class ArticleForm(ModelForm, StyleFormMixin):
     class Meta:
         model = Article
         fields = '__all__'
+        exclude = ['owner']
 
     def clean_text(self):
         """Функции для контроля содержимого документов"""
