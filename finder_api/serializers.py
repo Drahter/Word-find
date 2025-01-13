@@ -8,3 +8,6 @@ class ArticleSerializer(serializers.ModelSerializer):
         model = Article
         fields = '__all__'
 
+
+class SearchSerializer(serializers.Serializer):
+    query = serializers.CharField(required=True, max_length=50)
