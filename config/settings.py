@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'drf_yasg',
     'users',
     'finder',
+    'finder_api',
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -145,3 +150,18 @@ EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', False) == 'True'
 
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+CORS_ALLOWED_ORIGINS = [
+    'https://read-and-write.example.com',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8000/'
+
+]
+
+REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ]
+}
