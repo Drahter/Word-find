@@ -14,8 +14,8 @@
                         {% if user == article.owner %}
                         <p class="card-text"><small>Моя статья</small></p>
                         <div class="btn-group">
-                            <a class="btn btn-primary" href="{% url 'finder:article_detail' article.pk %}"
-                               role="button">Посмотреть</a>
+                            <a class="btn btn-info me-4" href="{% url 'finder:index' %}"
+                               role="button">Вернуться</a>
                             <a class="btn btn-primary" href="{% url 'finder:article_update' article.pk %}"
                                role="button">Редактировать</a>
                             <a class="btn btn-danger" href="{% url 'finder:article_delete' article.pk %}"
