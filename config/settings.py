@@ -16,8 +16,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# locale.setlocale(locale.LC_TIME, 'Russian_Russia.1251')
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

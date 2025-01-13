@@ -14,9 +14,9 @@
                             <a class="btn btn-primary" href="{% url 'finder:article_detail' article.pk %}"
                                role="button">Посмотреть</a>
                             {% if user == article.owner %}
-                            <a class="btn btn-danger" href="{% url 'finder:article_delete' article.pk %}"
+                            <a class="btn btn-danger me-4" href="{% url 'finder:article_delete' article.pk %}"
                                role="button">Удалить</a>
-                            <p class="card-text me-4"><strong>Моя статья</strong></p>
+                            <p class="card-text"><strong>Моя статья</strong></p>
                             {% endif %}
                         </div>
                         <p class="card-text"><small>Дата добавления:
