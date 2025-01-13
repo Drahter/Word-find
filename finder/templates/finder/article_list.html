@@ -5,7 +5,6 @@
         <a class="btn btn-primary mb-4 md-4" href="{% url 'finder:article_create' %}" role="button">Добавить документ</a>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for article in object_list %}
-            {% if user == article.owner %}
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -23,7 +22,6 @@
                     </div>
                 </div>
             </div>
-            {% endif %}
             {% endfor %}
         </div>
     </div>

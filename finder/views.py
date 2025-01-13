@@ -15,7 +15,10 @@ from finder.search import ArticleIndex
 class ArticleListView(LoginRequiredMixin, ListView):
     model = Article
 
-    # def get_queryset(self):
+    def get_queryset(self):
+        """Получить статьи для текущего пользователя"""
+        return Article.objects.filter(owner=self.request.user)
+        # def get_queryset(self):
     #     """Реализовано кэширование отдельных документов"""
     #     return get_documents_from_cache()
 
