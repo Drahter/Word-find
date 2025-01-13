@@ -17,6 +17,8 @@
                                role="button">Посмотреть</a>
                             <a class="btn btn-primary" href="{% url 'finder:article_update' article.pk %}"
                                role="button">Редактировать</a>
+                            <a class="btn btn-danger" href="{% url 'finder:article_delete' article.pk %}"
+                               role="button">Удалить</a>
                         </div>
                     </div>
                 </div>

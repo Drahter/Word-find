@@ -1,6 +1,9 @@
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView, FormView
 from django.shortcuts import render, redirect
+from elasticsearch import NotFoundError
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from finder.forms import ArticleForm, SearchForm
 from finder.models import Article
@@ -9,7 +12,7 @@ from users.models import User
 from finder.search import ArticleIndex
 
 
-class ArticleListView(ListView):
+class ArticleListView(LoginRequiredMixin, ListView):
     model = Article
 
     # def get_queryset(self):
@@ -21,10 +24,10 @@ class ArticleDetailView(DetailView):
     model = Article
 
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     form_class = ArticleForm
-    success_url = reverse_lazy("finder:article_list")
+    success_url = reverse_lazy("finder:index")
 
     def form_valid(self, form):
         """Установка создающего пользователя как владельца"""
@@ -36,24 +39,40 @@ class ArticleCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
     form_class = ArticleForm
-    success_url = reverse_lazy("finder:article_list")
+    success_url = reverse_lazy("finder:index")
+
+    def get_form_class(self):
+        """Изменение объектов закрыто от не-владельцев"""
+        user = self.request.user
+        if user == self.object.owner or user.is_superuser:
+            return ArticleForm
+        raise PermissionDenied
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     success_url = reverse_lazy("finder:index")
 
     def delete(self, request, *args, **kwargs):
-        # Переопределяем поведение при удалении
+        # Получаем объект для удаления
         self.object = self.get_object()
         id_for_delete = self.object.pk
+
+        # Удаляем объект из базы данных
         self.object.delete()
-        ArticleIndex.get(id=id_for_delete).delete()
-        print("Document deleted")
-        return redirect('finder:index')
+
+        # Удаляем документ из Elasticsearch
+        try:
+            ArticleIndex.get(id=id_for_delete).delete()
+            print("Document deleted")  # Логирование удаления
+        except NotFoundError:
+            print("Document not found in Elasticsearch")
+
+        # Перенаправление на success_url
+        return redirect(self.success_url)
 
 
 class IndexView(TemplateView):

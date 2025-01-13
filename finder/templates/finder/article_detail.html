@@ -11,6 +11,8 @@
                         <p>{{ article.text }}</p>
                         <p class="card-text"><small>Дата добавления:
                             {{ article.created_date|date:"D, d M Y H:i" }}</small></p>
+                        {% if user == article.owner %}
+                        <p class="card-text"><small>Моя статья</small></p>
                         <div class="btn-group">
                             <a class="btn btn-primary" href="{% url 'finder:article_detail' article.pk %}"
                                role="button">Посмотреть</a>
@@ -19,6 +21,10 @@
                             <a class="btn btn-danger" href="{% url 'finder:article_delete' article.pk %}"
                                role="button">Удалить</a>
                         </div>
+                        {% else %}
+                        <a class="btn btn-primary" href="{% url 'finder:index' %}"
+                           role="button">Вернуться</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
