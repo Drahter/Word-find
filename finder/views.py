@@ -4,15 +4,26 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.shortcuts import render, redirect
 from elasticsearch import NotFoundError
 from django.contrib.auth.mixins import LoginRequiredMixin
+from elasticsearch_dsl import Search
 
 from finder.forms import ArticleForm, SearchForm
 from finder.models import Article
-from finder.services import get_results
+from finder.services import get_results, save_article_doc
 from users.models import User
 from finder.search import ArticleIndex
 
 
 class ArticleListView(LoginRequiredMixin, ListView):
+    """
+       View to display a list of articles.
+
+       This view retrieves all articles from the database and renders them
+       using the specified template.
+
+       Attributes:
+           model (Article): The Article model to use for querying.
+           template_name (str): The template to render.
+    """
     model = Article
 
     def get_queryset(self):
@@ -39,6 +50,8 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         article.owner = user
         article.save()
 
+        save_article_doc(article)
+
         return super().form_valid(form)
 
 
@@ -53,6 +66,12 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
         if user == self.object.owner or user.is_superuser:
             return ArticleForm
         raise PermissionDenied
+
+    def form_valid(self, form):
+        article = form.save()
+        save_article_doc(article)
+
+        return super().form_valid(form)
 
 
 class ArticleDeleteView(LoginRequiredMixin, DeleteView):
@@ -69,8 +88,9 @@ class ArticleDeleteView(LoginRequiredMixin, DeleteView):
 
         # Удаляем документ из Elasticsearch
         try:
-            ArticleIndex.get(id=id_for_delete).delete()
-            print("Document deleted")  # Логирование удаления
+            doc = Search(index='articles').query('match', id=id_for_delete)
+            doc.delete()
+            print("Document deleted")
         except NotFoundError:
             print("Document not found in Elasticsearch")
 

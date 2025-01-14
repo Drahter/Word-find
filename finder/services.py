@@ -1,6 +1,8 @@
+from elasticsearch import NotFoundError
 from elasticsearch_dsl import Search
 
 from finder.models import Article
+from finder.search import ArticleIndex
 
 
 def get_results(request):
@@ -17,3 +19,21 @@ def get_results(request):
     results = results[-20:][::-1]
 
     return results
+
+
+def save_article_doc(article):
+    article_doc = ArticleIndex(
+        meta={'id': article.id},
+        rubrics=article.rubrics,
+        text=article.text
+    )
+    article_doc.save()
+    print('Document saved successfully')
+
+def delete_article_doc(doc_id):
+    try:
+        doc = Search(index='articles').query('match', id=doc_id)
+        doc.delete()
+        print("Document deleted")
+    except NotFoundError:
+        print("Document not found in Elasticsearch")

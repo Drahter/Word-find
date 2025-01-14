@@ -31,16 +31,6 @@ class Article(models.Model):
     def __str__(self):
         return f'Статья №{self.pk}'
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        article_doc = ArticleIndex(
-            meta={'id': self.pk},
-            rubrics=self.rubrics,
-            text=self.text
-        )
-        article_doc.save()
-        print('Document saved successfully')
 
     class Meta:
         verbose_name = 'Статья'
