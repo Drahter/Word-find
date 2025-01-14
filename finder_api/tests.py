@@ -25,9 +25,9 @@ class ArticleAPITestCase(APITestCase):
         )
 
     def test_elasticsearch_api_get_results(self):
-        url = reverse('api_search')
+        url = reverse('finder_api:api_search')
         response = self.client.post(url, {'query': 'текст'}, format='json')
-        results = response.json
+        results = response.data
 
         self.assertEqual(
             response.status_code, status.HTTP_200_OK
