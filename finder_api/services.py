@@ -9,7 +9,7 @@ def api_get_results(query):
     results = [
         {
             'id': hit.meta.id,
-            'rubrics': ', '.join(hit.rubrics),
+            'rubrics': hit.rubrics,
             'text': hit.text
         }
         for hit in response
