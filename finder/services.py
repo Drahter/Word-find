@@ -30,8 +30,10 @@ def save_article_doc(article):
     article_doc.save()
     print('Document saved successfully')
 
+
 def delete_article_doc(doc_id):
     try:
+        article = Article.objects.get(id=doc_id)
         doc = Search(index='articles').query('match', id=doc_id)
         doc.delete()
         print("Document deleted")

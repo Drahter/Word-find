@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from elasticsearch_dsl import Document, Text, Date
 
-from finder.search import ArticleIndex
 from config.settings import AUTH_USER_MODEL
 
 

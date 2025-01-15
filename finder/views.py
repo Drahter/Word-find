@@ -5,12 +5,14 @@ from django.shortcuts import render, redirect
 from elasticsearch import NotFoundError
 from django.contrib.auth.mixins import LoginRequiredMixin
 from elasticsearch_dsl import Search
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 from finder.forms import ArticleForm, SearchForm
 from finder.models import Article
 from finder.services import get_results, save_article_doc
 from users.models import User
-from finder.search import ArticleIndex
+from .documents import ArticleDocument
 
 
 class ArticleListView(LoginRequiredMixin, ListView):
@@ -77,19 +79,25 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     success_url = reverse_lazy("finder:index")
-
-    def delete(self, request, *args, **kwargs):
+    print('0')
+    def post(self, request, *args, **kwargs):
+        print('1')
         # Получаем объект для удаления
         self.object = self.get_object()
         id_for_delete = self.object.pk
+        print(id_for_delete)
 
         # Удаляем объект из базы данных
         self.object.delete()
-
+        print('2')
         # Удаляем документ из Elasticsearch
         try:
-            doc = Search(index='articles').query('match', id=id_for_delete)
-            doc.delete()
+            # article = Article.objects.get(id=id_for_delete)
+            # doc = Search(index='articles').query('match', id=id_for_delete)
+            # doc.delete()
+            article_document = ArticleDocument.get(id=id_for_delete)
+            print(article_document)
+            article_document.delete()
             print("Document deleted")
         except NotFoundError:
             print("Document not found in Elasticsearch")
