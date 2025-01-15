@@ -15,6 +15,9 @@ class ArticleForm(ModelForm, StyleFormMixin):
         """Функции для контроля содержимого документов"""
         cleaned_data = self.cleaned_data.get('text')
 
+        if not cleaned_data:
+            raise ValidationError('Это поле обязательно для заполнения.')
+
         forbidden_words = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция',
                            'радар']
         for each in forbidden_words:
