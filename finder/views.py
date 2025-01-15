@@ -2,17 +2,13 @@ from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView, FormView
 from django.shortcuts import render, redirect
-from elasticsearch import NotFoundError
 from django.contrib.auth.mixins import LoginRequiredMixin
-from elasticsearch_dsl import Search
-from django.db.models.signals import post_delete
-from django.dispatch import receiver
+
 
 from finder.forms import ArticleForm, SearchForm
 from finder.models import Article
 from finder.services import get_results, save_article_doc, delete_article_doc
 from users.models import User
-from finder.documents import ArticleDocument
 
 
 class ArticleListView(LoginRequiredMixin, ListView):

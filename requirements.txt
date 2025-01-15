@@ -11,3 +11,5 @@ gunicorn==23.0.0
 elasticsearch==8.17.0
 elasticsearch-dsl==8.17.1
 django-cors-headers==4.6.0
+coverage==7.6.10
+pytest==8.3.4
