@@ -10,9 +10,9 @@ from django.dispatch import receiver
 
 from finder.forms import ArticleForm, SearchForm
 from finder.models import Article
-from finder.services import get_results, save_article_doc
+from finder.services import get_results, save_article_doc, delete_article_doc
 from users.models import User
-from .documents import ArticleDocument
+from finder.documents import ArticleDocument
 
 
 class ArticleListView(LoginRequiredMixin, ListView):
@@ -79,28 +79,16 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     success_url = reverse_lazy("finder:index")
-    print('0')
+
     def post(self, request, *args, **kwargs):
-        print('1')
         # Получаем объект для удаления
         self.object = self.get_object()
         id_for_delete = self.object.pk
-        print(id_for_delete)
 
         # Удаляем объект из базы данных
         self.object.delete()
-        print('2')
         # Удаляем документ из Elasticsearch
-        try:
-            # article = Article.objects.get(id=id_for_delete)
-            # doc = Search(index='articles').query('match', id=id_for_delete)
-            # doc.delete()
-            article_document = ArticleDocument.get(id=id_for_delete)
-            print(article_document)
-            article_document.delete()
-            print("Document deleted")
-        except NotFoundError:
-            print("Document not found in Elasticsearch")
+        delete_article_doc(id_for_delete)
 
         # Перенаправление на success_url
         return redirect(self.success_url)

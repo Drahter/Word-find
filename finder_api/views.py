@@ -14,7 +14,7 @@ class LessonRetrieveAPIView(generics.RetrieveAPIView):
 
 
 class APISearchView(APIView):
-    def post(self, request):
+    def get(self, request):
         serializer = SearchSerializer(data=request.data)
         if serializer.is_valid():
             query = serializer.validated_data['query']

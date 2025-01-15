@@ -1,9 +1,8 @@
 from elasticsearch_dsl import Document, Text, Date, Keyword
-from .models import Article
 
 
 class ArticleDocument(Document):
-    rubrics = Keyword(multi=True)
+    rubrics = Text()
     text = Text()
     created_date = Date()
     owner = Keyword()

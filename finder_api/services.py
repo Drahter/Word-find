@@ -1,8 +1,8 @@
-from finder.search import ArticleIndex
+from finder.documents import ArticleDocument
 
 
 def api_get_results(query):
-    search = ArticleIndex.search().query("multi_match", query=query, fields=['rubrics', 'text'])
+    search = ArticleDocument.search().query("multi_match", query=query, fields=['rubrics', 'text'])
     search = search[:20]
     response = search.execute()
 
