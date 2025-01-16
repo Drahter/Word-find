@@ -6,6 +6,15 @@ from config.settings import AUTH_USER_MODEL
 
 
 class Article(models.Model):
+    """
+    Модель статьи
+
+    Поля:
+    rubrics - список ключевых слов статьи
+    text - текст статьи
+    created_date - дата создания статьи
+    owner - идентификатор автора статьи
+    """
     rubrics = ArrayField(
         models.CharField(max_length=50),
         blank=True,
@@ -30,7 +39,6 @@ class Article(models.Model):
 
     def __str__(self):
         return f'Статья №{self.pk}'
-
 
     class Meta:
         verbose_name = 'Статья'

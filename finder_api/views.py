@@ -9,11 +9,16 @@ from finder_api.services import api_get_results
 
 # Create your views here.
 class LessonRetrieveAPIView(generics.RetrieveAPIView):
+    """Контроллер для получения информации об отдельной статье"""
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
 
 
 class APISearchView(APIView):
+    """Контроллер для обработки запросов к Elasticsearch
+
+    Принимает запрос с ключом 'query' и возвращает результаты поиска в формате списка словарей с данными о статьях
+    """
     def get(self, request):
         serializer = SearchSerializer(data=request.data)
         if serializer.is_valid():

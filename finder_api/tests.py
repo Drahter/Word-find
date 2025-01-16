@@ -7,11 +7,20 @@ from users.models import User
 
 
 class ArticleAPITestCase(APITestCase):
+    """Тесты для API функционала приложения"""
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='testpass')
-        self.article = Article.objects.create(owner=self.user, rubrics=['Тестовая', 'статья'], text='Текст для тестовой статьи')
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass'
+        )
+        self.article = Article.objects.create(
+            owner=self.user,
+            rubrics=['Тестовая', 'статья'],
+            text='Текст для тестовой статьи'
+        )
 
     def test_article_retrieve(self):
+        """Проверка получения документа по id"""
         url = reverse('finder_api:api_article_detail', args=(self.article.pk,))
         response = self.client.get(url)
         data = response.json()

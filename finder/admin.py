@@ -4,5 +4,6 @@ from finder.models import Article
 
 
 @admin.register(Article)
-class AdminRegisterUser(admin.ModelAdmin):
+class AdminRegisterArticle(admin.ModelAdmin):
+    """Отображение статей в панели администрирования"""
     list_filter = ('id', 'rubrics', 'created_date')

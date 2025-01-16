@@ -4,13 +4,26 @@ from elasticsearch_dsl import Search
 from finder.documents import ArticleDocument
 from finder.models import Article
 
+"""Функции для взаимодействия с ElasticSearch"""
 
-def get_results(request):
+
+def get_search_results(query):
+    """
+    Выполняет запрос к базе данных ES и обрабатывает ответ
+
+    Args:
+        query: string
+    Returns:
+        list: список объектов Article
+
+    Выдача ограничена двадцатью последними внесенными статьями
+
+    """
     # Создаем объект поиска
     search = Search(index='articles')
 
-    # Добавляем сложные условия поиска
-    search = search.query('multi_match', query=request, fields=['rubrics', 'text'])
+    # Задаем условия поиска, передавая параметр query
+    search = search.query('multi_match', query=query, fields=['rubrics', 'text'])
 
     response = search.execute()
     results = []
@@ -22,6 +35,15 @@ def get_results(request):
 
 
 def save_article_doc(article):
+    """
+    Создает документ в ES из объекта Article
+
+    Args:
+        article: объект модели Article
+
+    Returns:
+        None
+    """
     article_doc = ArticleDocument(
         meta={'id': article.id},
         rubrics=', '.join(article.rubrics),
@@ -34,6 +56,15 @@ def save_article_doc(article):
 
 
 def delete_article_doc(doc_id):
+    """
+    Удаляет документ из ES по его id
+
+    Args:
+        doc_id: id документа
+
+    Returns:
+        None
+    """
     try:
         article_document = ArticleDocument.get(id=doc_id)
         article_document.delete()

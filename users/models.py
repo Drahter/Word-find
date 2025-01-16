@@ -3,6 +3,12 @@ from django.db import models
 
 
 class User(AbstractUser):
+    """Модель для пользователя сервиса
+
+    Для входа используется поле email вместо username.
+    Поле token нужно для реализации подтверждения email
+    при регистрации.
+    """
     username = models.CharField(
         max_length=35,
         blank=True,

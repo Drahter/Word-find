@@ -9,7 +9,9 @@ class FinderConfig(AppConfig):
     name = 'finder'
 
     def ready(self):
-        # Создаем соединение с Elasticsearch
+        """
+        Функция создает соединение с базой ElasticSeach и инициализирует индекс для работы со статьями.
+        """
         connections.create_connection(hosts=['http://elasticsearch:9200'])
 
         if not ArticleDocument._index.exists():
