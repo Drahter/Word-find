@@ -30,6 +30,8 @@ DEBUG = os.getenv('DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = ['*']
 
+ELASTICSEARCH_HOSTS=os.getenv('ELASTICSEARCH_HOSTS')
+
 # Application definition
 
 INSTALLED_APPS = [
