@@ -22,6 +22,10 @@
 
 
     <style>
+        .input-group {
+        max-width: 600px;
+        margin: 0 auto;
+        }
         .bd-placeholder-img {
           font-size: 1.125rem;
           text-anchor: middle;
@@ -179,16 +183,27 @@
 <main>
     <div class="row py-lg-5">
         <div class="col-lg-6 col-md-4 mx-auto">
-            <h1 class="fw-light text-center">Finder</h1>
-            <p class="lead text-center">Finds a word</p>
+            <h1 class="fw-light text-center">Поисковик</h1>
+            <p class="lead text-center">По словам и фразам</p>
         </div>
     </div>
 
     <section class="py-5 text-center container">
-        <div class="btn-group " role="group" aria-label="Basic example">
-            <p class="lead text-center">Anywhere!</p>
-
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <p class="lead text-center">Используя данный сервис, вы можете выполнить поиск по базе данных текстов,
+                добавленных другими пользователями, или добавить свои данные.</p>
         </div>
+
+        <!-- Добавьте поля ввода и кнопку для поиска -->
+        <form method="post" action="{% url 'finder:search_request' %}" class="mt-4">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="query" class="form-control" placeholder="Введите свой запрос" required>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Поиск</button>
+                </div>
+            </div>
+        </form>
     </section>
 
     {% block content %}

@@ -11,12 +11,13 @@
                         <p class="card-text"><strong>Рубрики:</strong> {{ article.rubrics|join:", " }}</p>
                         <p class="card-text">{{ article.text|truncatechars:100 }}</p>
                         <div class="btn-group">
+
                             <a class="btn btn-primary" href="{% url 'finder:article_detail' article.pk %}"
                                role="button">Посмотреть</a>
                             {% if user == article.owner %}
                             <a class="btn btn-danger me-4" href="{% url 'finder:article_delete' article.pk %}"
                                role="button">Удалить</a>
-                            <p class="card-text"><strong>Моя статья</strong></p>
+                            <p class="card-text"><small class="text-success">Моя статья</small></p>
                             {% endif %}
                         </div>
                         <p class="card-text"><small>Дата добавления:

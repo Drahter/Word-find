@@ -2,6 +2,7 @@
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
+        <h3>Ваши публикации</h3>
         <a class="btn btn-primary mb-4 md-4" href="{% url 'finder:article_create' %}" role="button">Добавить документ</a>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for article in object_list %}
@@ -9,8 +10,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="form-control">{{ article }}</h5>
-                        <p>{{ article.rubrics }}</p>
-                        <p>{{ article.text }}</p>
+                        <p>Рубрики: {{ article.rubrics|join:", " }}</p>
                         <div class="btn-group">
                             <a class="btn btn-primary" href="{% url 'finder:article_detail' article.pk %}"
                                role="button">Посмотреть</a>
