@@ -1,0 +1,112 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Finder API",
+        "description": "API for finding words in articles",
+        "version": "v1"
+    },
+    "basePath": "/api",
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "Basic": {
+            "type": "basic"
+        }
+    },
+    "security": [
+        {
+            "Basic": []
+        }
+    ],
+    "paths": {
+        "/articles/{id}/": {
+            "get": {
+                "operationId": "articles_read",
+                "description": "Контроллер для получения информации об отдельной статье",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/Article"
+                        }
+                    }
+                },
+                "tags": [
+                    "articles"
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "A unique integer value identifying this Статья.",
+                    "required": true,
+                    "type": "integer"
+                }
+            ]
+        },
+        "/search/": {
+            "get": {
+                "operationId": "search_list",
+                "summary": "Контроллер для обработки запросов к Elasticsearch",
+                "description": "Принимает запрос с ключом 'query' и возвращает результаты поиска в формате списка словарей с данными о статьях",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "search"
+                ]
+            },
+            "parameters": []
+        }
+    },
+    "definitions": {
+        "Article": {
+            "required": [
+                "text"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "title": "ID",
+                    "type": "integer",
+                    "readOnly": true
+                },
+                "rubrics": {
+                    "type": "array",
+                    "items": {
+                        "title": "Rubrics",
+                        "type": "string",
+                        "maxLength": 50,
+                        "minLength": 1
+                    },
+                    "x-nullable": true
+                },
+                "text": {
+                    "title": "Текст статьи",
+                    "type": "string",
+                    "minLength": 1
+                },
+                "created_date": {
+                    "title": "Дата добавления статьи",
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                },
+                "owner": {
+                    "title": "Автор статьи",
+                    "type": "integer",
+                    "x-nullable": true
+                }
+            }
+        }
+    }
+}

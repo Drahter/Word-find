@@ -1,0 +1,31 @@
+{% extends 'finder/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <form class="row" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <h4 class="card-title">
+                        {% if object %}
+                        Изменение документа №{{ object.pk }} от {{ object.created_date }}
+                        {% else %}
+                        Добавление документа
+                        {% endif %}
+                    </h4>
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-3" >
+                        {% if object %}
+                        Сохранить
+                        {% else %}
+                        Создать
+                        {% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
