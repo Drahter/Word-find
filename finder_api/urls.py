@@ -1,6 +1,14 @@
 from django.urls import path
+from drf_yasg import openapi
+
 from finder_api.apps import FinderApiConfig
 from finder_api.views import LessonRetrieveAPIView, APISearchView
+
+api_info = openapi.Info(
+    title="Finder API",
+    default_version='v1',
+    description="API for finding words in articles"
+)
 
 app_name = FinderApiConfig.name
 

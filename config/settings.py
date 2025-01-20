@@ -30,7 +30,11 @@ DEBUG = os.getenv('DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = ['*']
 
-ELASTICSEARCH_HOSTS=os.getenv('ELASTICSEARCH_HOSTS')
+ELASTICSEARCH_HOST = os.getenv('ELASTICSEARCH_HOST')
+
+SWAGGER_SETTINGS = {
+   'DEFAULT_INFO': 'api.urls.api_info',
+}
 
 # Application definition
 
