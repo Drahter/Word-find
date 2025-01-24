@@ -23,15 +23,21 @@ def get_search_results(query):
     search = Search(index='articles')
 
     # Задаем условия поиска, передавая параметр query
-    search = search.query('multi_match', query=query, fields=['rubrics', 'text'])
+    search = search.query(
+        'multi_match',
+        query=query,
+        fields=['rubrics', 'text']
+    )
 
     response = search.execute()
     results = []
     for hit in response:
         results.append(Article.objects.get(id=hit.meta.id))
-    results = results[-20:][::-1]
+    sorted(results, key=lambda x: x.created_date)
+    results = results[-20:]
 
     return results
+
 
 
 def save_article_doc(article):
